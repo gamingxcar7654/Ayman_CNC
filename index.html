@@ -2,7 +2,10 @@
 <html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"
+    />
     <title>أبو عاصم غندور - فن القص بالفايبر ليزر CNC</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -197,24 +200,6 @@
         font-weight: 700;
         white-space: nowrap;
       }
-      .del {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        width: 34px;
-        height: 34px;
-        border-radius: 50%;
-        border: 1px solid var(--line);
-        background: #fff;
-        color: #b91c1c;
-        font-size: 1.2rem;
-        line-height: 1;
-        box-shadow: var(--shadow);
-      }
-      .del:hover {
-        background: #b91c1c;
-        color: #fff;
-      }
       .empty {
         grid-column: 1/-1;
         text-align: center;
@@ -237,85 +222,211 @@
         background: #fff;
         display: none;
         flex-direction: column;
+        height: 100vh;
+        height: 100dvh;
       }
       .lb.open {
         display: flex;
       }
-      .lb .stage {
-        flex: 1;
-        min-height: 0;
+      .lbhead {
         display: flex;
         align-items: center;
-        justify-content: center;
-        padding: 56px 70px 8px;
-        touch-action: pan-y;
+        gap: 12px;
+        padding: 10px 16px;
+        padding-top: max(10px, env(safe-area-inset-top));
+        border-bottom: 1px solid var(--line);
       }
-      .lb .stage img {
-        max-width: 100%;
-        max-height: 100%;
-        object-fit: contain;
-        user-select: none;
-        -webkit-user-drag: none;
-      }
-      .lb .cap {
-        text-align: center;
-        padding: 10px 16px 20px;
-        font-weight: 700;
-      }
-      .lb .cap small {
-        display: block;
-        color: var(--spark-d);
-        font-weight: 600;
-      }
-      .lb .x {
-        position: absolute;
-        top: 12px;
-        right: 14px;
+      .lbhead .x {
+        flex: none;
         width: 44px;
         height: 44px;
         border-radius: 50%;
         border: 1px solid var(--line);
         background: #fff;
-        font-size: 1.6rem;
-        box-shadow: var(--shadow);
+        font-size: 1.7rem;
+        line-height: 1;
+        color: var(--ink);
+        transition: 0.2s;
       }
-      .lb .arrow {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
+      .lbhead .x:hover {
+        background: var(--spark);
+        border-color: var(--spark);
+      }
+      .lbhead .sp {
+        flex: none;
+        width: 44px;
+      }
+      .lb .cap {
+        flex: 1;
+        min-width: 0;
+        text-align: center;
+        font-weight: 800;
+        line-height: 1.35;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .lb .cap small {
+        display: block;
+        color: var(--spark-d);
+        font-weight: 600;
+        font-size: 0.82rem;
+      }
+      .mid {
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        align-items: stretch;
+        gap: 14px;
+        padding: 12px 16px;
+      }
+      .arrow {
+        flex: none;
+        align-self: center;
         width: 52px;
         height: 52px;
         border-radius: 50%;
         border: 1px solid var(--line);
         background: #fff;
-        font-size: 1.6rem;
-        box-shadow: var(--shadow);
+        font-size: 1.7rem;
+        line-height: 1;
         color: var(--ink);
+        box-shadow: var(--shadow);
         transition: 0.2s;
       }
-      .lb .arrow:hover,
-      .lb .x:hover {
+      .arrow:hover {
         background: var(--spark);
         border-color: var(--spark);
       }
-      .lb .prev {
-        right: 12px;
-      }
-      .lb .next {
-        left: 12px;
-      }
-      .lb .ldel {
-        position: absolute;
-        top: 12px;
-        left: 14px;
+      .stage {
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        touch-action: none;
         border: 1px solid var(--line);
+        border-radius: 12px;
         background: #fff;
-        color: #b91c1c;
+        cursor: zoom-in;
+        user-select: none;
+      }
+      .stage.zoomed {
+        cursor: grab;
+      }
+      .stage:active.zoomed {
+        cursor: grabbing;
+      }
+      .stage img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        -webkit-user-drag: none;
+        will-change: transform;
+        transform-origin: center center;
+        pointer-events: none;
+      }
+      .bar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 22px;
+        flex-wrap: wrap;
+        padding: 10px 16px;
+        padding-bottom: max(12px, env(safe-area-inset-bottom));
+        border-top: 1px solid var(--line);
+      }
+      .bar .grp {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .bar .grp[hidden] {
+        display: none;
+      }
+      .tb {
+        min-width: 44px;
+        height: 44px;
+        padding: 0 14px;
+        border: 1px solid var(--line);
         border-radius: 10px;
-        padding: 8px 14px;
-        font-weight: 700;
+        background: #fff;
+        font-weight: 800;
+        font-size: 1rem;
+        color: var(--ink);
+        box-shadow: var(--shadow);
+        transition: 0.2s;
+      }
+      .tb:hover {
+        background: var(--spark);
+        border-color: var(--spark);
+      }
+      .tb.danger {
+        color: #b91c1c;
+      }
+      .tb.danger:hover {
+        background: #b91c1c;
+        border-color: #b91c1c;
+        color: #fff;
+      }
+      .tb.zl {
+        min-width: 64px;
+        direction: ltr;
+        background: #f8fafc;
+      }
+      .mnav {
+        display: none;
       }
 
+      @media (max-width: 700px) {
+        .lbhead {
+          padding: 8px 12px;
+        }
+        .mid {
+          padding: 8px;
+        }
+        .mid .arrow {
+          display: none;
+        }
+        .bar {
+          display: grid;
+          grid-template-columns: auto 1fr auto;
+          gap: 8px;
+          padding: 10px 10px;
+          padding-bottom: max(12px, env(safe-area-inset-bottom));
+        }
+        .bar .zoomgrp {
+          justify-content: center;
+          gap: 6px;
+        }
+        .bar .act {
+          grid-column: 1/-1;
+          gap: 10px;
+        }
+        .bar .act .tb {
+          flex: 1;
+        }
+        .mnav {
+          display: block;
+        }
+        .tb {
+          height: 48px;
+          min-width: 46px;
+          padding: 0 10px;
+          font-size: 1.15rem;
+        }
+        .tb .lbl {
+          display: none;
+        }
+        .tb.zl {
+          min-width: 58px;
+          font-size: 0.95rem;
+        }
+        .bar .act .tb {
+          font-size: 1rem;
+        }
+      }
       /* ===== Add modal ===== */
       .ov {
         position: fixed;
@@ -439,16 +550,6 @@
           gap: 0;
           padding: 10px 12px;
         }
-        .lb .stage {
-          padding: 60px 8px 8px;
-        }
-        .lb .arrow {
-          width: 42px;
-          height: 42px;
-          top: auto;
-          bottom: 70px;
-          transform: none;
-        }
       }
       @media (max-width: 420px) {
         .topbar .brand {
@@ -531,7 +632,7 @@
       <!-- ⚠️ مكان الشعار: ضع صورة الشعار بجانب هذا الملف باسم logo.png (أو غيّر المسار هنا) -->
       <img
         class="logo"
-        src="./logo.png"
+        src="logo.png"
         alt="شعار أيمن غندور"
         onerror="this.style.display = 'none'"
       />
@@ -553,12 +654,64 @@
       aria-modal="true"
       aria-label="عارض الصور"
     >
-      <button class="x" id="lbClose" aria-label="إغلاق">×</button>
-      <button class="ldel" id="lbDel" hidden>حذف الصورة</button>
-      <button class="arrow prev" id="lbPrev" aria-label="السابق">›</button>
-      <div class="stage" id="stage"><img id="lbImg" alt="" /></div>
-      <button class="arrow next" id="lbNext" aria-label="التالي">‹</button>
-      <div class="cap" id="lbCap"></div>
+      <div class="lbhead">
+        <button class="x" id="lbClose" aria-label="إغلاق">×</button>
+        <div class="cap" id="lbCap"></div>
+        <span class="sp"></span>
+      </div>
+      <div class="mid">
+        <button class="arrow" data-act="prev" aria-label="السابق">›</button>
+        <div class="stage" id="stage">
+          <img id="lbImg" alt="" draggable="false" />
+        </div>
+        <button class="arrow" data-act="next" aria-label="التالي">‹</button>
+      </div>
+      <div class="bar">
+        <button class="tb mnav" data-act="prev" aria-label="السابق">›</button>
+        <div class="grp zoomgrp">
+          <button class="tb" data-act="zout" aria-label="تصغير">
+            −<span class="lbl"> تصغير</span>
+          </button>
+          <button
+            class="tb zl"
+            id="zLbl"
+            data-act="zreset"
+            title="إعادة الضبط 100%"
+            aria-label="إعادة الضبط"
+          >
+            100%
+          </button>
+          <button class="tb" data-act="zin" aria-label="تكبير">
+            +<span class="lbl"> تكبير</span>
+          </button>
+        </div>
+        <button class="tb mnav" data-act="next" aria-label="التالي">‹</button>
+        <div class="grp act" id="lbAct">
+          <button class="tb" data-act="edit">تعديل</button>
+          <button class="tb danger" data-act="del">حذف</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit modal -->
+    <div class="ov" id="ovEdit">
+      <div
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="editTitle"
+      >
+        <h2 id="editTitle">تعديل بيانات الصورة</h2>
+        <label for="eName">رقم / اسم التصميم</label>
+        <input type="text" id="eName" />
+        <label for="eCat">التصنيف</label>
+        <select id="eCat"></select>
+        <div class="err" id="eErr" role="alert"></div>
+        <div class="row">
+          <button class="ok" id="eSave">حفظ التعديلات</button>
+          <button id="eCancel">إلغاء</button>
+        </div>
+      </div>
     </div>
 
     <!-- Add modal -->
@@ -809,6 +962,7 @@
       };
 
       async function fetchPhotos(silent) {
+        const curId = view[idx] && view[idx].id;
         if (!sb) {
           loading = false;
           renderGrid();
@@ -841,7 +995,11 @@
         }));
         renderGrid();
         if ($("lb").classList.contains("open")) {
-          if (!view.length) closeLb();
+          const j = view.findIndex((x) => String(x.id) === String(curId));
+          if (j >= 0) {
+            idx = j;
+            showLb(true);
+          } else if (!view.length) closeLb();
           else {
             idx = Math.min(idx, view.length - 1);
             showLb();
@@ -871,7 +1029,6 @@
                 (x, i) => `
     <article class="card">
       <button class="ph" data-i="${i}" aria-label="عرض ${esc(x.title)}"><img src="${esc(x.src)}" alt="${esc(x.title)}" loading="lazy"></button>
-      ${x.custom ? `<button class="del" data-del="${esc(x.id)}" aria-label="حذف">×</button>` : ""}
       <div class="meta"><span class="t">${esc(x.title)}</span><span class="c">${esc(x.cat)}</span></div>
     </article>`,
               )
@@ -886,11 +1043,6 @@
         renderGrid();
       };
       $("grid").onclick = (e) => {
-        const d = e.target.closest("[data-del]");
-        if (d) {
-          removeItem(d.dataset.del);
-          return;
-        }
         const p = e.target.closest("[data-i]");
         if (p) openLb(+p.dataset.i);
       };
@@ -918,7 +1070,9 @@
             if (e2)
               toast("حُذف السجل لكن تعذّر حذف الملف من التخزين: " + e2.message);
           }
+          closeLb();
           await fetchPhotos(true);
+          toast("تم حذف الصورة");
         } catch (e) {
           toast("تعذّر الحذف: " + (e.message || e));
         } finally {
@@ -926,22 +1080,161 @@
         }
       }
 
-      /* ---------- Lightbox ---------- */
-      function showLb() {
+      /* ---------- Lightbox + Deep Zoom (حتى 500%) ---------- */
+      const stage = $("stage"),
+        lbImg = $("lbImg");
+      const Z = { s: 1, tx: 0, ty: 0, MIN: 1, MAX: 5 };
+
+      function clampPan() {
+        const sw = stage.clientWidth,
+          sh = stage.clientHeight;
+        const w = lbImg.offsetWidth * Z.s,
+          h = lbImg.offsetHeight * Z.s;
+        const mx = Math.max(0, (w - sw) / 2),
+          my = Math.max(0, (h - sh) / 2);
+        Z.tx = Math.min(mx, Math.max(-mx, Z.tx));
+        Z.ty = Math.min(my, Math.max(-my, Z.ty));
+      }
+      function applyZ(smooth) {
+        clampPan();
+        lbImg.style.transition = smooth ? "transform .18s ease-out" : "none";
+        lbImg.style.transform = `translate(${Z.tx}px,${Z.ty}px) scale(${Z.s})`;
+        $("zLbl").textContent = Math.round(Z.s * 100) + "%";
+        stage.classList.toggle("zoomed", Z.s > 1.001);
+      }
+      function zoomAt(ns, px = 0, py = 0, smooth) {
+        ns = Math.min(Z.MAX, Math.max(Z.MIN, ns));
+        const k = ns / Z.s;
+        Z.tx = px - (px - Z.tx) * k;
+        Z.ty = py - (py - Z.ty) * k;
+        Z.s = ns;
+        if (ns <= 1.001) {
+          Z.tx = 0;
+          Z.ty = 0;
+        }
+        applyZ(smooth);
+      }
+      const resetZ = (smooth) => {
+        Z.s = 1;
+        Z.tx = 0;
+        Z.ty = 0;
+        applyZ(smooth);
+      };
+      const rel = (cx, cy) => {
+        const r = stage.getBoundingClientRect();
+        return [cx - r.left - r.width / 2, cy - r.top - r.height / 2];
+      };
+
+      /* عجلة الفأرة */
+      stage.addEventListener(
+        "wheel",
+        (e) => {
+          e.preventDefault();
+          const [px, py] = rel(e.clientX, e.clientY);
+          zoomAt(Z.s * (e.deltaY < 0 ? 1.25 : 0.8), px, py, true);
+        },
+        { passive: false },
+      );
+
+      /* لمس / فأرة: سحب، قرص بإصبعين، نقر مزدوج، سحب جانبي للتقليب عند 100% */
+      const ptrs = new Map();
+      let lastDist = 0,
+        lastMid = null,
+        multi = false,
+        down = null,
+        lastTap = null;
+      stage.addEventListener("pointerdown", (e) => {
+        try {
+          stage.setPointerCapture(e.pointerId);
+        } catch (_) {}
+        ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
+        if (ptrs.size === 1) {
+          multi = false;
+          down = { x: e.clientX, y: e.clientY, t: Date.now() };
+        } else {
+          multi = true;
+          const [a, b] = [...ptrs.values()];
+          lastDist = Math.hypot(a.x - b.x, a.y - b.y);
+          lastMid = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+        }
+      });
+      stage.addEventListener("pointermove", (e) => {
+        const p = ptrs.get(e.pointerId);
+        if (!p) return;
+        const dx = e.clientX - p.x,
+          dy = e.clientY - p.y;
+        p.x = e.clientX;
+        p.y = e.clientY;
+        if (ptrs.size >= 2) {
+          const [a, b] = [...ptrs.values()];
+          const d = Math.hypot(a.x - b.x, a.y - b.y),
+            m = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+          if (lastDist > 0) {
+            const [px, py] = rel(m.x, m.y);
+            zoomAt((Z.s * d) / lastDist, px, py);
+            Z.tx += m.x - lastMid.x;
+            Z.ty += m.y - lastMid.y;
+            applyZ();
+          }
+          lastDist = d;
+          lastMid = m;
+        } else if (Z.s > 1.001) {
+          Z.tx += dx;
+          Z.ty += dy;
+          applyZ();
+        }
+      });
+      function endPtr(e) {
+        if (!ptrs.has(e.pointerId)) return;
+        ptrs.delete(e.pointerId);
+        if (ptrs.size === 0 && !multi && down && e.type === "pointerup") {
+          const dx = e.clientX - down.x,
+            dy = e.clientY - down.y,
+            dt = Date.now() - down.t;
+          if (Math.hypot(dx, dy) < 10 && dt < 300) {
+            const now = Date.now();
+            if (
+              lastTap &&
+              now - lastTap.t < 320 &&
+              Math.hypot(e.clientX - lastTap.x, e.clientY - lastTap.y) < 40
+            ) {
+              lastTap = null;
+              const [px, py] = rel(e.clientX, e.clientY);
+              Z.s > 1.001 ? resetZ(true) : zoomAt(2.5, px, py, true);
+            } else lastTap = { t: now, x: e.clientX, y: e.clientY };
+          } else if (
+            Z.s <= 1.001 &&
+            Math.abs(dx) > 60 &&
+            Math.abs(dx) > Math.abs(dy) * 1.5
+          ) {
+            dx < 0 ? next() : prev();
+          }
+        }
+        if (ptrs.size === 0) down = null;
+      }
+      stage.addEventListener("pointerup", endPtr);
+      stage.addEventListener("pointercancel", endPtr);
+      window.addEventListener("resize", () => {
+        if ($("lb").classList.contains("open")) applyZ();
+      });
+
+      /* عرض الصورة */
+      function showLb(keepZoom) {
         const x = view[idx];
         if (!x) return;
-        $("lbImg").src = x.src;
-        $("lbImg").alt = x.title;
+        if (lbImg.getAttribute("src") !== x.src) lbImg.src = x.src;
+        lbImg.alt = x.title;
         $("lbCap").innerHTML =
           `${esc(x.title)}<small>${esc(x.cat)} — ${idx + 1} / ${view.length}</small>`;
-        $("lbDel").hidden = !x.custom;
-        $("lbDel").dataset.id = x.id || "";
+        $("lbAct").hidden = !x.custom;
+        if (!keepZoom) resetZ();
       }
       function openLb(i) {
         idx = i;
         showLb();
         $("lb").classList.add("open");
         document.body.style.overflow = "hidden";
+        resetZ();
         $("lbClose").focus();
       }
       function closeLb() {
@@ -959,35 +1252,115 @@
         showLb();
       };
       $("lbClose").onclick = closeLb;
-      $("lbNext").onclick = next;
-      $("lbPrev").onclick = prev;
-      $("lbDel").onclick = () => removeItem($("lbDel").dataset.id);
-      document.addEventListener("keydown", (e) => {
-        if ($("lb").classList.contains("open")) {
-          if (e.key === "Escape") closeLb();
-          if (e.key === "ArrowLeft") next(); // في الاتجاه RTL: اليسار = التالي
-          if (e.key === "ArrowRight") prev();
-        } else if ($("ov").classList.contains("open") && e.key === "Escape")
-          closeAdd();
+
+      /* ---------- تعديل البيانات ---------- */
+      let editId = null;
+      $("eCat").innerHTML = CATS.map((c) => `<option>${c}</option>`).join("");
+      function openEdit() {
+        const x = view[idx];
+        if (!x || !x.custom) return;
+        editId = x.id;
+        $("eName").value = x.title;
+        $("eCat").value = x.cat;
+        $("eErr").textContent = "";
+        $("ovEdit").classList.add("open");
+        $("eName").focus();
+      }
+      function closeEdit() {
+        $("ovEdit").classList.remove("open");
+      }
+      $("eCancel").onclick = closeEdit;
+      $("ovEdit").addEventListener("click", (e) => {
+        if (e.target.id === "ovEdit") closeEdit();
       });
-      let sx = null;
-      $("stage").addEventListener(
-        "touchstart",
-        (e) => {
-          sx = e.touches[0].clientX;
-        },
-        { passive: true },
-      );
-      $("stage").addEventListener("touchend", (e) => {
-        if (sx === null) return;
-        const dx = e.changedTouches[0].clientX - sx;
-        sx = null;
-        if (Math.abs(dx) > 50) {
-          dx < 0 ? next() : prev();
+      $("eName").addEventListener("keydown", (e) => {
+        if (e.key === "Enter") $("eSave").click();
+      });
+      $("eSave").onclick = async () => {
+        const err = $("eErr");
+        err.textContent = "";
+        if (!sb) return;
+        const title = $("eName").value.trim(),
+          category = $("eCat").value;
+        if (!title) {
+          err.textContent = "اكتب رقم أو اسم التصميم.";
+          return;
+        }
+        $("eSave").disabled = true;
+        setBusy(true, "جارٍ حفظ التعديلات...");
+        try {
+          const { data, error } = await sb
+            .from(TABLE)
+            .update({ title, category })
+            .eq("id", editId)
+            .select();
+          if (error) throw error;
+          if (!data || !data.length)
+            throw new Error(
+              "لم يتم تحديث أي سجل — تأكد من إضافة صلاحية التعديل (update policy) على جدول photos.",
+            );
+          if (filter !== "الكل" && filter !== category) {
+            filter = "الكل";
+            renderFilters();
+          }
+          closeEdit();
+          await fetchPhotos(true);
+          toast("تم حفظ التعديلات ✓");
+        } catch (e) {
+          err.textContent = "تعذّر الحفظ: " + (e.message || e);
+        } finally {
+          $("eSave").disabled = false;
+          setBusy(false);
+        }
+      };
+
+      /* أزرار عارض الصور */
+      $("lb").addEventListener("click", (e) => {
+        const b = e.target.closest("[data-act]");
+        if (!b) return;
+        switch (b.dataset.act) {
+          case "prev":
+            prev();
+            break;
+          case "next":
+            next();
+            break;
+          case "zin":
+            zoomAt(Z.s * 1.5, 0, 0, true);
+            break;
+          case "zout":
+            zoomAt(Z.s / 1.5, 0, 0, true);
+            break;
+          case "zreset":
+            resetZ(true);
+            break;
+          case "edit":
+            openEdit();
+            break;
+          case "del": {
+            const x = view[idx];
+            if (x && x.custom) removeItem(x.id);
+            break;
+          }
         }
       });
-      $("lb").addEventListener("click", (e) => {
-        if (e.target.id === "stage") closeLb();
+      document.addEventListener("keydown", (e) => {
+        if ($("ovEdit").classList.contains("open")) {
+          if (e.key === "Escape") closeEdit();
+          return;
+        }
+        if ($("ov").classList.contains("open")) {
+          if (e.key === "Escape") closeAdd();
+          return;
+        }
+        if (!$("lb").classList.contains("open")) return;
+        if (e.key === "Escape") closeLb();
+        else if (e.key === "ArrowLeft")
+          next(); // في الاتجاه RTL: اليسار = التالي
+        else if (e.key === "ArrowRight") prev();
+        else if (e.key === "+" || e.key === "=") zoomAt(Z.s * 1.5, 0, 0, true);
+        else if (e.key === "-") zoomAt(Z.s / 1.5, 0, 0, true);
+        else if (e.key === "0") resetZ(true);
       });
 
       /* ---------- نافذة الإضافة والرفع ---------- */
@@ -1078,10 +1451,12 @@
         $("save").disabled = true;
         setBusy(true, "جارٍ رفع الصورة...");
         try {
-          const up = await sb.storage.from(BUCKET).upload(path, pendingBlob, {
-            contentType: "image/jpeg",
-            cacheControl: "31536000",
-          });
+          const up = await sb.storage
+            .from(BUCKET)
+            .upload(path, pendingBlob, {
+              contentType: "image/jpeg",
+              cacheControl: "31536000",
+            });
           if (up.error) throw up.error;
           const { data } = sb.storage.from(BUCKET).getPublicUrl(path);
           const ins = await sb
