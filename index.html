@@ -747,7 +747,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
     <script>
       /* ============ إعدادات Supabase: ضع بيانات مشروعك هنا ============ */
-      const SUPABASE_URL = "https://kaxvknmfcaeehqlauakn.supabase.co";
+      const SUPABASE_URL = "https://kaxvkrnfcaeehqlauakn.supabase.co";
       const SUPABASE_ANON_KEY =
         "sb_publishable_Lw8stT94lyZchWhIV4Yllw_rAQKp3e4";
       /* ================================================================= */
@@ -1451,12 +1451,10 @@
         $("save").disabled = true;
         setBusy(true, "جارٍ رفع الصورة...");
         try {
-          const up = await sb.storage
-            .from(BUCKET)
-            .upload(path, pendingBlob, {
-              contentType: "image/jpeg",
-              cacheControl: "31536000",
-            });
+          const up = await sb.storage.from(BUCKET).upload(path, pendingBlob, {
+            contentType: "image/jpeg",
+            cacheControl: "31536000",
+          });
           if (up.error) throw up.error;
           const { data } = sb.storage.from(BUCKET).getPublicUrl(path);
           const ins = await sb
